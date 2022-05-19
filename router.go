@@ -1,8 +1,10 @@
 package router
 
 import (
+	"bytes"
 	"context"
 	"github.com/SaCavid/router/models"
+	"html/template"
 	"net/http"
 )
 
@@ -47,4 +49,21 @@ func (r Router) Run() (models.LambdaResponse, error) {
 
 	r.W.StatusCode = http.StatusNotFound
 	return *r.W, nil
+}
+
+func (r Router) Execute(name, path string, data any) (string, error) {
+	t := template.New(name)
+
+	var err error
+	t, err = t.ParseFiles(path)
+	if err != nil {
+		return "", err
+	}
+
+	var tpl bytes.Buffer
+	if err := t.Execute(&tpl, data); err != nil {
+		return "", err
+	}
+
+	return tpl.String(), nil
 }
