@@ -2,8 +2,8 @@ package router
 
 import (
 	"context"
+	"github.com/SaCavid/router/models"
 	"net/http"
-	"router/models"
 )
 
 type Router struct {
