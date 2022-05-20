@@ -1,34 +1,49 @@
 package models
 
 type LambdaRequest struct {
-	Headers         map[string]string `json:"headers"`
-	IsBase64Encoded bool              `json:"isBase64Encoded"`
-	RawPath         string            `json:"rawPath"`
-	RawQueryString  string            `json:"rawQueryString"`
-	RequestContext  RequestContext    `json:"requestContext"`
-	RouteKey        string            `json:"routeKey"`
-	Version         string            `json:"version"`
+	Version               string            `json:"version"`
+	RouteKey              string            `json:"routeKey"`
+	RawPath               string            `json:"rawPath"`
+	RawQueryString        string            `json:"rawQueryString"`
+	Cookies               []string          `json:"cookies"`
+	Headers               map[string]string `json:"headers"`
+	QueryStringParameters map[string]string `json:"queryStringParameters"`
+	RequestContext        `json:"requestContext"`
+	Body                  string      `json:"body"`
+	PathParameters        interface{} `json:"pathParameters"`
+	IsBase64Encoded       bool        `json:"isBase64Encoded"`
+	StageVariables        interface{} `json:"stageVariables"`
 }
 
 type RequestContext struct {
-	AccountId    string `json:"accountId"`
-	ApiId        string `json:"apiId"`
+	AccountID      string      `json:"accountId"`
+	APIID          string      `json:"apiId"`
+	Authentication interface{} `json:"authentication"`
+	Authorizer     struct {
+		Iam struct {
+			AccessKey       string      `json:"accessKey"`
+			AccountID       string      `json:"accountId"`
+			CallerID        string      `json:"callerId"`
+			CognitoIdentity interface{} `json:"cognitoIdentity"`
+			PrincipalOrgID  interface{} `json:"principalOrgId"`
+			UserArn         string      `json:"userArn"`
+			UserID          string      `json:"userId"`
+		} `json:"iam"`
+	} `json:"authorizer"`
 	DomainName   string `json:"domainName"`
 	DomainPrefix string `json:"domainPrefix"`
-	Http         HTTP   `json:"http"`
-	RequestId    string `json:"requestId"`
-	RouteKey     string `json:"routeKey"`
-	Stage        string `json:"stage"`
-	Time         string `json:"time"`
-	TimeEpoch    int64  `json:"timeEpoch"`
-}
-
-type HTTP struct {
-	Method    string `json:"method"`
-	Path      string `json:"path"`
-	Protocol  string `json:"protocol"`
-	SourceIp  string `json:"sourceIp"`
-	UserAgent string `json:"userAgent"`
+	HTTP         struct {
+		Method    string `json:"method"`
+		Path      string `json:"path"`
+		Protocol  string `json:"protocol"`
+		SourceIP  string `json:"sourceIp"`
+		UserAgent string `json:"userAgent"`
+	} `json:"http"`
+	RequestID string `json:"requestId"`
+	RouteKey  string `json:"routeKey"`
+	Stage     string `json:"stage"`
+	Time      string `json:"time"`
+	TimeEpoch int64  `json:"timeEpoch"`
 }
 
 type LambdaResponse struct {

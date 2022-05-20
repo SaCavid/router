@@ -67,3 +67,8 @@ func (r Router) Execute(name, path string, data any) (string, error) {
 
 	return tpl.String(), nil
 }
+
+func (r Router) Middleware() Router {
+
+	return r
+}
