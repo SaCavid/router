@@ -43,7 +43,7 @@ func (r Router) Handler(method, path string, f func(ctx context.Context, event m
 
 func (r Router) Run() (models.LambdaResponse, error) {
 
-	if route, ok := r.RouteMap[r.R.RequestContext.Http.Method][r.R.RequestContext.Http.Path]; ok {
+	if route, ok := r.RouteMap[r.R.RequestContext.HTTP.Method][r.R.RequestContext.HTTP.Path]; ok {
 		return route(r.Ctx, *r.R)
 	}
 
