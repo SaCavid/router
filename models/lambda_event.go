@@ -13,6 +13,9 @@ type LambdaRequest struct {
 	PathParameters        interface{} `json:"pathParameters"`
 	IsBase64Encoded       bool        `json:"isBase64Encoded"`
 	StageVariables        interface{} `json:"stageVariables"`
+
+	// Vars internal usage - for variables in url example: /path/{variable}
+	Vars map[string]string
 }
 
 type RequestContext struct {

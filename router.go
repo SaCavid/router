@@ -3,7 +3,10 @@ package router
 import (
 	"bytes"
 	"context"
+	"encoding/base64"
+	"encoding/json"
 	"github.com/SaCavid/router/models"
+	"github.com/rs/zerolog/log"
 	"html/template"
 	"net/http"
 )
@@ -44,6 +47,14 @@ func (r Router) Handler(method, path string, f func(ctx context.Context, event m
 func (r Router) Run() (models.LambdaResponse, error) {
 
 	if route, ok := r.RouteMap[r.R.RequestContext.HTTP.Method][r.R.RequestContext.HTTP.Path]; ok {
+
+		// decode base64 body to string
+		data, err := base64.StdEncoding.DecodeString(r.R.Body)
+		if err != nil {
+			log.Fatal().Msg("error: " + err.Error())
+		}
+
+		r.R.Body = string(data)
 		return route(r.Ctx, *r.R)
 	}
 
@@ -71,4 +82,14 @@ func (r Router) Execute(name, path string, data any) (string, error) {
 func (r Router) Middleware() Router {
 
 	return r
+}
+
+func (r Router) BindJson(d any) error {
+
+	err := json.Unmarshal([]byte(r.R.Body), &d)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
