@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"context"
 	"encoding/base64"
-	"encoding/json"
 	"github.com/SaCavid/router/models"
 	"github.com/rs/zerolog/log"
 	"html/template"
@@ -133,14 +132,4 @@ func (r Router) Execute(name, path string, data any) (string, error) {
 func (r Router) Middleware() Router {
 
 	return r
-}
-
-func (r Router) BindJson(d any) error {
-
-	err := json.Unmarshal([]byte(r.R.Body), &d)
-	if err != nil {
-		return err
-	}
-
-	return nil
 }
