@@ -4,12 +4,13 @@ import (
 	"context"
 	"github.com/SaCavid/router"
 	"github.com/SaCavid/router/models"
+	"github.com/aws/aws-lambda-go/lambda"
 	"log"
 	"net/http"
 )
 
 func init() {
-
+	log.Println("SS Serverless Server")
 }
 
 func main() {
