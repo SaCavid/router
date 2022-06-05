@@ -13,8 +13,9 @@ SS is a simple router for AWS Lambda function. This router allows us to use lamb
 
 ## How It Works
 
-1. As any other router (`config`, `run`, `use`).
+golang 1.18+
 
+1. As any other router (`config`, `run`, `use`).
 
 ## Usage
 
