@@ -39,14 +39,12 @@ func NewLambdaRouter(ctx context.Context, event *models.LambdaRequest) (router R
 	return
 }
 
-func (r Router) AllowedMethods(methods ...string) *Router {
+func (r *Router) AllowedMethods(methods ...string) {
 
 	for _, v := range methods {
 		newMethod := make(map[string]Urls)
 		r.RouteMap[v] = newMethod
 	}
-
-	return &r
 }
 
 func (r Router) Handler(method, path string, f func(ctx context.Context, event models.LambdaRequest) (models.LambdaResponse, error)) {
@@ -110,7 +108,7 @@ func (r Router) Run() (models.LambdaResponse, error) {
 	}
 
 	r.W.StatusCode = http.StatusNotFound
-	return *r.W, nil
+	return r.Response(nil)
 }
 
 func (r Router) Execute(name, path string, data any) (string, error) {
@@ -133,6 +131,10 @@ func (r Router) Execute(name, path string, data any) (string, error) {
 func (r Router) Middleware() Router {
 
 	return r
+}
+
+func (r Router) Response(err error) (models.LambdaResponse, error) {
+	return *r.W, err
 }
 
 func (r Router) BindJson(d any) error {
