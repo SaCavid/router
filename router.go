@@ -5,12 +5,13 @@ import (
 	"context"
 	"encoding/base64"
 	"encoding/json"
-	"github.com/SaCavid/router/models"
-	"github.com/rs/zerolog/log"
 	"html/template"
 	"net/http"
 	"regexp"
 	"strings"
+
+	"github.com/SaCavid/router/models"
+	"github.com/rs/zerolog/log"
 )
 
 type Router struct {
